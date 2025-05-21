@@ -32,7 +32,7 @@ export class Server {
         });
 
         this.app.listen(this.port, () => {
-            console.log('Server running on port 3000');
+            console.log(`Server running on port ${this.port}`);
         });
 
     }
