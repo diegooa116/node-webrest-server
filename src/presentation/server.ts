@@ -26,6 +26,17 @@ export class Server {
         //* Public folder
         this.app.use( express.static( this.publicPath ) );
 
+        //* Routes
+        this.app.get('/api/todos', (req, res)=>{
+
+            res.json([
+                { id: 1, text: 'Buy milk', createdAt: new Date() },
+                { id: 2, text: 'Buy bread', createdAt: null },
+                { id: 3, text: 'Buy butter', createdAt: new Date() },
+            ])
+        });
+
+        //* Cualquier ruta no definida | ayuda a los SPA
         this.app.get('/*splat', async (req, res) =>{
             const indexPath = path.join(__dirname,`../../${ this.publicPath }/index.html`);
             res.sendFile( indexPath );
