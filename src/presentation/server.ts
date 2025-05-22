@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { Router } from 'express';
 import path from 'path';
 
 interface Options{
-    port: number,
-    public_path?: string,
+    port: number;
+    routes: Router;
+    public_path?: string;
 }
 
 export class Server {
@@ -12,10 +13,12 @@ export class Server {
 
     private readonly port: number;
     private readonly publicPath: string;
+    private readonly routes: Router;
 
     constructor(options: Options){
-        const { port, public_path = 'public' } = options;
-        this.port = port
+        const { port, routes, public_path = 'public' } = options;
+        this.port = port;
+        this.routes = routes;
         this.publicPath = public_path;
     }
 
@@ -27,14 +30,7 @@ export class Server {
         this.app.use( express.static( this.publicPath ) );
 
         //* Routes
-        this.app.get('/api/todos', (req, res)=>{
-
-            res.json([
-                { id: 1, text: 'Buy milk', createdAt: new Date() },
-                { id: 2, text: 'Buy bread', createdAt: null },
-                { id: 3, text: 'Buy butter', createdAt: new Date() },
-            ])
-        });
+        this.app.use( this.routes );
 
         //* Cualquier ruta no definida | ayuda a los SPA
         this.app.get('/*splat', async (req, res) =>{
