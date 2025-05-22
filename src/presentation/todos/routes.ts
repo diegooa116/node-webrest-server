@@ -13,6 +13,7 @@ export class TodoRoutes {
         const todoController = new TodosController();
 
         router.get('/', todoController.getTodos );
+        router.get('/:id', todoController.getTodoById ); //* :id | Sintaxis especial de express que permite recibir un argumento en la ruta
 
 
         return router;
