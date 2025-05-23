@@ -16,6 +16,7 @@ export class TodoRoutes {
         router.get('/:id', todoController.getTodoById ); //* :id | Sintaxis especial de express que permite recibir un argumento en la ruta
         
         router.post('/', todoController.createTodo );
+        router.put('/:id', todoController.updateTodo );
 
         return router;
     }
